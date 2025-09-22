@@ -7,7 +7,7 @@ Browser-Native: Processes everything client-side with Canvas (images) and Web Au
 Preview & Export: Real-time preview with synced audio; download ready-to-play .agif files.
 Player Included: Simple .agif viewer with looping playback and triggers.
 
- DemoTry it live: AudiGIF Creator
+Try it live: AudiGIF Creator
 Play .agif files: AudiGIF Player
 
 How to UseUpload Assets:Images: Select PNG/JPEG files (multiple)—they auto-resize to 300x300 for consistency.
