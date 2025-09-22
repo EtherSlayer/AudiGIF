@@ -7,7 +7,7 @@ Browser-Native: Processes everything client-side with Canvas (images) and Web Au
 Preview & Export: Real-time preview with synced audio; download ready-to-play .agif files.
 Player Included: Simple .agif viewer with looping playback and triggers.
 
-Try it live: AudiGIF Creator
+ DemoTry it live: AudiGIF Creator
 Play .agif files: AudiGIF Player
 
 How to UseUpload Assets:Images: Select PNG/JPEG files (multiple)—they auto-resize to 300x300 for consistency.
@@ -32,5 +32,5 @@ Fork the repo, make changes, and submit a pull request! Ideas for enhancements:M
 Compression for smaller files.
 Export to WebP for better perf.
 
-Report issues or share your .agif creations in the Discussions tab. LicenseThis project is licensed under the MIT License - see the LICENSE file for details.AGIF Format Spec: Licensed under CC-BY 4.0—credit Luke Hofmann/Neru as the creator in any implementations. FORMAT-LICENSE.md AcknowledgmentsInspired by classic GIFs and the need for sound without video bloat. Thanks to the open-source community for Web Audio and Canvas APIs! Star this repo if you love AudiGIF! Follow @neru
+Report issues or share your .agif creations in the Discussions tab. AudiGIF project is licensed under the MIT License - Credit goes to Luke Hofmann/Neru as the creator in any implementations Acknowledgments, this was inspired by classic GIFs and the need for sound without video bloat. Thanks to the open-source community for Web Audio and Canvas APIs! Star this repo if you love AudiGIF! Follow @neru
  for updates. Questions? Open an issue.
