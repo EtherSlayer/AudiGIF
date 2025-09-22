@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AudiGIF Player</title>
+    <style>
+      body {
+        background-color: white;
+        color: black;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+      }
+      canvas {
+        border: 2px solid black;
+        margin-top: 20px;
+        width: 800px;
+        height: 800px;
+        background-color: #f0f0f0;
+      }
+      #status {
+        margin-top: 10px;
+      }
+      input[type="file"] {
+        border: 2px solid black;
+        padding: 10px;
+        margin: 10px 0;
+        background: white;
+        color: black;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>AudiGIF Player</h1>
+    <input type="file" id="agifInput" accept=".agif" />
+    <canvas id="canvas"></canvas>
+    <div id="status"></div>
+    <script>
+      // AGIFDecoder and AGIFPlayer classes (copied here for standalone player)
+      class AGIFDecoder {
+        static async decode(arrayBuffer) {
+          const view = new DataView(arrayBuffer);
+          const textDecoder = new TextDecoder();
+          let offset = 0;
+
+          // Magic (4 bytes)
+          const magic = textDecoder.decode(
+            new Uint8Array(arrayBuffer, offset, 4)
+          );
+          if (magic !== "AGIF")
+            throw new Error("Invalid AGIF file: Missing magic header");
+          offset += 4;
+
+          // Header length + JSON
+          const headerLen = view.getUint32(offset, true);
+          offset += 4;
+          const headerStr = textDecoder.decode(
+            new Uint8Array(arrayBuffer, offset, headerLen)
+          );
+          const header = JSON.parse(headerStr);
+          offset += headerLen;
+
+          // Validate header
+          if (header.version !== "1.0" || header.audioFormat !== "wav") {
+            throw new Error(
+              `Unsupported AGIF version or audio format: ${header.version}/${header.audioFormat}`
+            );
+          }
+
+          // Frames: numFrames * (len + base64 PNG)
+          const frameData = [];
+          for (let i = 0; i < header.numFrames; i++) {
+            const frameLen = view.getUint32(offset, true);
+            offset += 4;
+            const frameBase64 = textDecoder.decode(
+              new Uint8Array(arrayBuffer, offset, frameLen)
+            );
+            frameData.push(`data:image/png;base64,${frameBase64}`);
+            offset += frameLen;
+          }
+
+          // Audio: numAudioClips * (len + WAV bytes)
+          const audioData = [];
+          for (let i = 0; i < header.numAudioClips; i++) {
+            const audioLen = view.getUint32(offset, true);
+            offset += 4;
+            const audioBytes = new Uint8Array(arrayBuffer, offset, audioLen);
+            audioData.push(audioBytes);
+            offset += audioLen;
+          }
+
+          // Trigger map: len + JSON
+          const triggerLen = view.getUint32(offset, true);
+          offset += 4;
+          const triggerStr = textDecoder.decode(
+            new Uint8Array(arrayBuffer, offset, triggerLen)
+          );
+          const triggers = JSON.parse(triggerStr);
+          offset += triggerLen;
+
+          // EOF check
+          if (offset !== arrayBuffer.byteLength) {
+            throw new Error(
+              `File parsing error: Extra ${
+                arrayBuffer.byteLength - offset
+              } bytes at end`
+            );
+          }
+
+          // Load frame images
+          const frames = await Promise.all(
+            frameData.map((data) => {
+              return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => resolve(img);
+                img.onerror = reject;
+                img.src = data;
+              });
+            })
+          );
+
+          // Decode audio buffers (with slice to isolate WAV data)
+          const audioContext = new AudioContext(); // Temp for decoding
+          const audioBuffers = await Promise.all(
+            audioData.map(async (data) => {
+              const isolatedBuffer = data.slice().buffer; // Copy to new ArrayBuffer
+              return await audioContext.decodeAudioData(isolatedBuffer);
+            })
+          );
+
+          return {
+            header,
+            frames, // Loaded Image objects
+            audioBuffers, // AudioBuffer[] for each clip
+            triggers: triggers.frame_triggers || [], // Array of {frame: number, audio: number}
+            loop: triggers.loop !== false, // Default true
+          };
+        }
+      }
+
+      class AGIFPlayer {
+        constructor(canvasId, audioContext) {
+          this.canvas = document.getElementById(canvasId);
+          this.ctx = this.canvas.getContext("2d");
+          this.audioContext = audioContext || new AudioContext();
+          this.isPlaying = false;
+          this.currentFrame = 0;
+          this.animationId = null;
+        }
+
+        async loadAndPlay(fileOrBuffer) {
+          let buffer;
+          if (fileOrBuffer instanceof File) {
+            buffer = await fileOrBuffer.arrayBuffer();
+          } else if (fileOrBuffer instanceof ArrayBuffer) {
+            buffer = fileOrBuffer;
+          } else if (fileOrBuffer instanceof Blob) {
+            buffer = await fileOrBuffer.arrayBuffer();
+          } else {
+            throw new Error(
+              "Invalid input: Provide File, Blob, or ArrayBuffer"
+            );
+          }
+
+          try {
+            // Resume audio context if suspended (user interaction required in some browsers)
+            if (this.audioContext.state === "suspended") {
+              await this.audioContext.resume();
+            }
+
+            const decoded = await AGIFDecoder.decode(buffer);
+            this.decoded = decoded;
+            this.setupCanvas(decoded.header);
+            this.play();
+          } catch (error) {
+            console.error("AGIF Load Error:", error);
+            throw error; // Propagate for status
+          }
+        }
+
+        setupCanvas(header) {
+          const size = Math.max(header.width, header.height, 800); // Scale to fit, min 800px for player
+          this.canvas.width = size;
+          this.canvas.height = size;
+          this.frameDuration = 1000 / header.frameRate; // ms per frame
+        }
+
+        play() {
+          if (this.isPlaying || !this.decoded) return;
+          this.isPlaying = true;
+          this.animate();
+        }
+
+        pause() {
+          this.isPlaying = false;
+          if (this.animationId) {
+            cancelAnimationFrame(this.animationId);
+            this.animationId = null;
+          }
+        }
+
+        animate() {
+          if (!this.isPlaying) return;
+
+          const { frames, header, triggers, audioBuffers } = this.decoded;
+          if (!frames.length) return;
+
+          // Clear and draw current frame (scaled)
+          this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+          const scaleX = this.canvas.width / header.width;
+          const scaleY = this.canvas.height / header.height;
+          this.ctx.drawImage(
+            frames[this.currentFrame],
+            0,
+            0,
+            header.width * scaleX,
+            header.height * scaleY
+          );
+
+          // Trigger audio for this frame
+          triggers.forEach((trigger) => {
+            if (
+              trigger.frame === this.currentFrame &&
+              audioBuffers[trigger.audio]
+            ) {
+              const source = this.audioContext.createBufferSource();
+              source.buffer = audioBuffers[trigger.audio];
+              source.connect(this.audioContext.destination);
+              source.start(); // Plays immediately; for sync, could offset by current time
+            }
+          });
+
+          // Next frame
+          this.currentFrame = (this.currentFrame + 1) % header.numFrames;
+
+          // Schedule next frame (use setTimeout for precise frameRate timing, raf for smoothness)
+          this.animationId = setTimeout(() => {
+            requestAnimationFrame(() => this.animate());
+          }, this.frameDuration);
+        }
+
+        // Event handler example for file input
+        static initFromFileInput(inputId, canvasId, statusId) {
+          const input = document.getElementById(inputId);
+          const status = document.getElementById(statusId);
+          const player = new AGIFPlayer(canvasId);
+          input.addEventListener("change", async (e) => {
+            const file = e.target.files[0];
+            if (file && file.name.endsWith(".agif")) {
+              status.textContent = "Loading...";
+              try {
+                await player.loadAndPlay(file);
+                status.textContent = "Playing...";
+              } catch (error) {
+                status.textContent = "Error: " + error.message;
+              }
+            }
+          });
+          return player;
+        }
+      }
+
+      // Initialize player
+      AGIFPlayer.initFromFileInput("agifInput", "canvas", "status");
+    </script>
+  </body>
+</html>

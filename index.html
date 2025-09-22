@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AudiGIF Creator</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>AudiGIF Creator</h1>
+      <div class="upload-section">
+        <label for="titleInput">AGIF Name:</label>
+        <input
+          type="text"
+          id="titleInput"
+          placeholder="Enter name (default: output)"
+        />
+        <label for="frameRateSelect">Frame Rate (fps):</label>
+        <select id="frameRateSelect">
+          <option value="1">1 (very slow)</option>
+          <option value="2">2 (slow)</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="10" selected>10 (default)</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+          <option value="24">24</option>
+          <option value="30">30</option>
+          <option value="60">60 (fast)</option>
+        </select>
+        <label for="imageInput">Upload Images (PNG/JPEG):</label>
+        <input
+          type="file"
+          id="imageInput"
+          accept="image/png,image/jpeg"
+          multiple
+        />
+        <label for="audioInput">Upload Audio (MP3/WAV):</label>
+        <input
+          type="file"
+          id="audioInput"
+          accept="audio/mp3,audio/wav"
+          multiple
+        />
+      </div>
+      <div id="frameList" class="frame-list"></div>
+      <button id="previewButton">Preview AGIF</button>
+      <button id="processButton">Process AGIF</button>
+      <div id="previewContainer" style="display: none; margin-top: 20px">
+        <h2>Preview</h2>
+        <canvas id="previewCanvas"></canvas>
+        <div id="previewStatus"></div>
+      </div>
+      <div id="output"></div>
+      <p><a href="player.html" target="_blank">Open AudiGIF Player</a></p>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

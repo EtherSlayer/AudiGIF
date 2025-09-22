@@ -1,0 +1,84 @@
+/* Existing styles... */
+.title-wrapper,
+.framerate-wrapper {
+  display: inline-block;
+  margin-right: 10px;
+}
+body {
+  background-color: white;
+  color: black;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.upload-section {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="file"],
+select,
+button {
+  border: 2px solid black;
+  padding: 10px;
+  margin: 5px 0;
+  background: white;
+  color: black;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.frame-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.frame-item {
+  margin: 10px;
+  border: 2px solid black;
+  padding: 10px;
+  text-align: center;
+}
+
+.frame-item img {
+  max-width: 100px;
+  max-height: 100px;
+  border: 1px solid black;
+}
+
+.frame-item select {
+  border: 2px solid black;
+  padding: 5px;
+  background: white;
+  color: black;
+  margin-top: 5px;
+}
+
+#previewCanvas {
+  border: 2px solid black;
+  width: 300px;
+  height: 300px;
+}
+
+#previewStatus {
+  margin-top: 10px;
+}
+
+#output {
+  margin-top: 20px;
+  font-weight: bold;
+}
