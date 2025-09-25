@@ -1,5 +1,6 @@
 # AudiGIF - (AGIF) is a revolutionary new media format that brings sound to GIFs! Imagine animated images with frame-specific audio triggers—perfect for memes, games, educational content, or creative storytelling. Upload images and audio clips, assign sounds to specific frames, preview the hybrid animation, and download your .agif file. No video conversion needed—just lightweight, browser-based magic.
-<img width="1338" height="363" alt="image" src="https://github.com/user-attachments/assets/020e73c4-5473-4a95-b978-12d7a9d66d7e" />
+<img width="1350" height="213" alt="image" src="https://github.com/user-attachments/assets/9f6d99fe-1e9a-42e8-880a-3deb588ed0af" />
+
 
 Created by Luke Hofmann/Neru in 2025. Open-source under MIT—fork, remix, and build on it! FeaturesHybrid Format: Embed PNG frames and WAV audio clips in a single .agif file using a custom length-prefixed binary structure (magic: "AGIF", header JSON, base64 frames, audio buffers, triggers).
 Frame-Triggered Audio: Select which audio clip plays on each frame for precise, event-driven sound (e.g., a "hard drop" sound in a Tetris animation).
@@ -10,7 +11,6 @@ Player Included: Simple .agif viewer with looping playback and triggers.
 
  DemoTry it live: AudiGIF Creator - (https://f43574-5000.csb.app/)
 Play .agif files: AudiGIF Player
-<img width="1350" height="213" alt="image" src="https://github.com/user-attachments/assets/46bff8dc-0fbd-42b2-82c2-9eb86fb2ad36" />
 
 
 How to UseUpload Assets:Images: Select PNG/JPEG files (multiple)—they auto-resize to 300x300 for consistency.
