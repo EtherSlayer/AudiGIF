@@ -5,7 +5,7 @@
 Created by Luke Hofmann/Neru in 2025. Open-source under MIT—fork, remix, and build on it! FeaturesHybrid Format: Embed PNG frames and WAV audio clips in a single .agif file using a custom length-prefixed binary structure (magic: "AGIF", header JSON, base64 frames, audio buffers, triggers).
 Frame-Triggered Audio: Select which audio clip plays on each frame for precise, event-driven sound (e.g., a "hard drop" sound in a Tetris animation).
 Customizable: Set frame rates (1-60 FPS), titles, and loop behavior.
-Browser-Native: Processes everything client-side with Canvas (images) and Web Audio API (sound)—no installs or servers.
+Browser-Native: Processes everything client-side with Canvas (images) and Web Audio API (sound)—no installs.
 Preview & Export: Real-time preview with synced audio; download ready-to-play .agif files.
 Player Included: Simple .agif viewer with looping playback and triggers.
 
