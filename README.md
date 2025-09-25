@@ -8,7 +8,7 @@ Browser-Native: Processes everything client-side with Canvas (images) and Web Au
 Preview & Export: Real-time preview with synced audio; download ready-to-play .agif files.
 Player Included: Simple .agif viewer with looping playback and triggers.
 
- DemoTry it live: AudiGIF Creator
+ DemoTry it live: AudiGIF Creator - (https://f43574-5000.csb.app/)
 Play .agif files: AudiGIF Player
 <img width="411" height="517" alt="Screenshot 2025-09-21 184530" src="https://github.com/user-attachments/assets/425904f5-694e-4219-bf71-87d70f2cb1fd" />
 
