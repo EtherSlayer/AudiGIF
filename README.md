@@ -31,6 +31,12 @@ Tweak frame rate/title, then "Process AGIF" to download your .agif file.
 
 Play It:Open in the Player: Upload .agif and watch it loop with audio cues.
 
+
+Here is a quick 50 second video showing the quick process of creating an .agif files!
+
+https://github.com/user-attachments/assets/c2d94ab4-35f5-4b5e-b70c-b5553cfb04d3
+
+
 Pro Tip: Keep audio short (<10s) for snappy files. Supports looping by default.
 
 Tech StackFrontend: Vanilla HTML/CSS/JavaScript (lightweight, no frameworks).
