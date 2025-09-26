@@ -1,18 +1,20 @@
-# AudiGIF - (AGIF) is a revolutionary new media format that brings sound to GIFs! Imagine animated images with frame-specific audio triggers—perfect for memes, games, educational content, or creative storytelling. Upload images and audio clips, assign sounds to specific frames, preview the hybrid animation, and download your .agif file. No video conversion needed—just lightweight, browser-based magic.
+# AudiGIF - (AGIF) is a revolutionary new media format that brings sound to GIFs! Imagine animated images with frame-specific audio triggers—perfect for memes, games, educational content, or creative storytelling. Upload images and audio clips, assign sounds to specific frames, preview the hybrid animation, and download your .agif file. No video conversion needed—just lightweight, browser-based magic. *THIS NEW MEDIA FORMAT FILE IS NOT ACCEPTED ON ANY PLATFORM ON THE INTERNET AT THE MOMENT FOR NOW*
 <img width="1350" height="213" alt="image" src="https://github.com/user-attachments/assets/9f6d99fe-1e9a-42e8-880a-3deb588ed0af" />
 
 
 Created by Luke Hofmann/Neru in 2025. Open-source under MIT—fork, remix, and build on it! FeaturesHybrid Format: Embed PNG frames and WAV audio clips in a single .agif file using a custom length-prefixed binary structure (magic: "AGIF", header JSON, base64 frames, audio buffers, triggers).
 Frame-Triggered Audio: Select which audio clip plays on each frame for precise, event-driven sound (e.g., a "hard drop" sound in a Tetris animation).
 Customizable: Set frame rates (1-60 FPS), titles, and loop behavior.
+Frame select by pressing Up or Down buttons to switch images & audio to a specific frame in the sequence. 
 Browser-Native: Processes everything client-side with Canvas (images) and Web Audio API (sound)—no installs.
 Preview & Export: Real-time preview with synced audio; download ready-to-play .agif files.
-Player Included: Simple .agif viewer with looping playback and triggers.
+Media Player Included: Simple .agif viewer with looping playback and triggers by pressing "Open AudiGIF Player" and a stop button to stop the .agif file from looping forever.
 
  DemoTry it live: AudiGIF Creator - (https://f43574-5000.csb.app/)
 Play .agif files: AudiGIF Player
 
-<img width="411" height="517" alt="Screenshot 2025-09-21 184530" src="https://github.com/user-attachments/assets/d1c3e1e9-a75a-4cad-80ec-5ba745027bd5" />
+<img width="401" height="509" alt="image" src="https://github.com/user-attachments/assets/7cb148fb-27be-4f17-b3dc-58fbac77bb93" />
+
 
 How to UseUpload Assets:Images: Select PNG/JPEG files (multiple)—they auto-resize to 300x300 for consistency.
 Audio: MP3/WAV clips (multiple)—converted to WAV internally.
