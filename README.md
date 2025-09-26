@@ -16,6 +16,10 @@ Play .agif files: AudiGIF Player
 <img width="401" height="509" alt="image" src="https://github.com/user-attachments/assets/7cb148fb-27be-4f17-b3dc-58fbac77bb93" />
 
 
+https://github.com/user-attachments/assets/dd10006d-ce32-489c-920a-27d4341e5bcc
+
+
+
 How to UseUpload Assets:Images: Select PNG/JPEG files (multiple)—they auto-resize to 300x300 for consistency.
 Audio: MP3/WAV clips (multiple)—converted to WAV internally.
 
