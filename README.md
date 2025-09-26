@@ -10,6 +10,8 @@ Browser-Native: Processes everything client-side with Canvas (images) and Web Au
 Preview & Export: Real-time preview with synced audio; download ready-to-play .agif files.
 Media Player Included: Simple .agif viewer with looping playback and triggers by pressing "Open AudiGIF Player" and a stop button to stop the .agif file from looping forever.
 
+Minor Issue: All frames are forcibly resized to 300x300 pixels during AGIF creation (in createAudiGIF()), which downsamples higher-res uploads and causes softness/pixelation when the player scales them up (e.g., to 800x800). JPEG compression at 75% quality adds minor artifacts too.
+
  DemoTry it live: AudiGIF Creator - (https://f43574-5000.csb.app/)
 Play .agif files: AudiGIF Player
 
