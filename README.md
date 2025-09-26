@@ -12,6 +12,7 @@ Player Included: Simple .agif viewer with looping playback and triggers.
  DemoTry it live: AudiGIF Creator - (https://f43574-5000.csb.app/)
 Play .agif files: AudiGIF Player
 
+<img width="411" height="517" alt="Screenshot 2025-09-21 184530" src="https://github.com/user-attachments/assets/d1c3e1e9-a75a-4cad-80ec-5ba745027bd5" />
 
 How to UseUpload Assets:Images: Select PNG/JPEG files (multiple)—they auto-resize to 300x300 for consistency.
 Audio: MP3/WAV clips (multiple)—converted to WAV internally.
